@@ -60,7 +60,14 @@ executeClick.MouseClick:Connect(function(p)
 	if not executingEveryone then
 		if p ~= owner then return end
 	end
-	loadstring("local owner = game:GetService'Players'['"..p.Name.."']"..txtBox.Text)()
+	local a,b = pcall(function()
+		spawn(function()
+			loadstring("local owner = game:GetService'Players'['"..p.Name.."']"..txtBox.Text)()
+		end)
+	end)
+	if not a then
+		print("EXECUTOR ERROR: "..b)
+	end
 end)
 
 
