@@ -32,9 +32,9 @@ local executeEveryone = Instance.new("ClickDetector",boardexecuteEveryone)
 local boardInvisibleClick = Instance.new("ClickDetector",boardInvisible)
 
 -- Guis
-local surface = Instance.new("SurfaceGui",{Parent = board,Adornee = board,Name = "Surface",LightInfluence=0})
+local surface = Instance.new("SurfaceGui",{Parent = board,Adornee = board,Name = "Surface",LightInfluence=0,AlwaysOnTop = true})
 local scroll = Instance.new("ScrollingFrame",{Name="Scroll",Parent = surface,AutomaticCanvasSize = "XY",Size = UDim2.new(1,0,1,0),ClipsDescendants = true,CanvasSize = UDim2.new(0,0,0,0)})
-local txtBox = Instance.new("TextBox",{ClearTextOnFocus = false,Name="Txt",Parent = scroll,Size = UDim2.new(1,0,1,0),TextXAlignment = "Left",TextYAlignment = "Top",MultiLine = true,TextWrapped = false,AutomaticSize = "XY",BackgroundTransparency = 1,TextSize = 20,Text = "dont type anything innopropriate people can see this"})
+local txtBox = Instance.new("TextBox",{ClearTextOnFocus = false,Name="Txt",Parent = scroll,Size = UDim2.new(1,0,1,0),TextXAlignment = "Left",TextYAlignment = "Top",MultiLine = true,TextWrapped = false,AutomaticSize = "XY",BackgroundTransparency = 1,TextSize = 20,Text = "remember other people can see this"})
 
 
 -- variables
