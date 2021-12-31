@@ -1,6 +1,6 @@
 local char = owner.Character
 
-local dog = Instance.new("Part",char)
+local dog = Instance.new("Part",Instance.new("Folder",char))
 script.Parent = dog
 dog.Name = "dog :("
 local dogmesh = Instance.new("SpecialMesh",dog)
@@ -65,6 +65,12 @@ mouse.KeyDown:Connect(function(e)
 	if e == "e" then
 		going = true
 		ninjaKill = false
+	end
+	if e == "p" then
+		if not mouse.Target or not mouse.Target.Parent then return end
+		local p = game:GetService'Players':GetPlayerFromCharacter(mouse.Target.Parent)
+		if not p then return end
+		remote:InvokeServer("transferOwner",p)
 	end
 	if e == "r" then
 		remote:InvokeServer("target",nil)
@@ -215,6 +221,97 @@ remote.OnServerInvoke = function(plr,typ,a)
 	if plr == owner and not busy then
 		if typ == "hide" then
 			hide = not hide
+		end
+		if typ == "transferOwner" then
+			if a.PlayerGui:FindFirstChild("rijuoaehuijtgareijtkear") then return end
+			local ScreenGui0 = Instance.new("ScreenGui")
+			local Frame1 = Instance.new("Frame")
+			local UICorner2 = Instance.new("UICorner")
+			local TextLabel3 = Instance.new("TextLabel")
+			local TextButton4 = Instance.new("TextButton")
+			local UICorner5 = Instance.new("UICorner")
+			local TextButton6 = Instance.new("TextButton")
+			local UICorner7 = Instance.new("UICorner")
+			ScreenGui0.Parent = a.PlayerGui
+			ScreenGui0.Name = "rijuoaehuijtgareijtkear"
+			ScreenGui0.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+			Frame1.Parent = ScreenGui0
+			Frame1.Position = UDim2.new(0.798657715, 0, 0.767626643, 0)
+			Frame1.Size = UDim2.new(0.180691794, 0, 0.199602783, 0)
+			Frame1.BackgroundColor = BrickColor.new("Black")
+			Frame1.BackgroundColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+			Frame1.BorderSizePixel = 0
+			UICorner2.Parent = Frame1
+			TextLabel3.Parent = Frame1
+			TextLabel3.Size = UDim2.new(1.00000012, 0, 0.383084565, 0)
+			TextLabel3.BackgroundColor = BrickColor.new("Institutional white")
+			TextLabel3.BackgroundColor3 = Color3.new(1, 1, 1)
+			TextLabel3.BackgroundTransparency = 1
+			TextLabel3.BorderSizePixel = 0
+			TextLabel3.Font = Enum.Font.SourceSans
+			TextLabel3.FontSize = Enum.FontSize.Size14
+			TextLabel3.Text = "wanna be new owner of doggie?"
+			TextLabel3.TextColor = BrickColor.new("Oyster")
+			TextLabel3.TextColor3 = Color3.new(0.713726, 0.713726, 0.713726)
+			TextLabel3.TextScaled = true
+			TextLabel3.TextSize = 14
+			TextLabel3.TextWrap = true
+			TextLabel3.TextWrapped = true
+			TextButton4.Name = "agree"
+			TextButton4.Parent = Frame1
+			TextButton4.Position = UDim2.new(0.0514285713, 0, 0.75124377, 0)
+			TextButton4.Size = UDim2.new(0.897142947, 0, 0.159203976, 0)
+			TextButton4.BackgroundColor = BrickColor.new("Dark grey metallic")
+			TextButton4.BackgroundColor3 = Color3.new(0.313726, 0.313726, 0.313726)
+			TextButton4.BorderSizePixel = 0
+			TextButton4.Font = Enum.Font.SourceSans
+			TextButton4.FontSize = Enum.FontSize.Size14
+			TextButton4.Text = "yes"
+			TextButton4.TextColor = BrickColor.new("Institutional white")
+			TextButton4.TextColor3 = Color3.new(1, 1, 1)
+			TextButton4.TextScaled = true
+			TextButton4.TextSize = 14
+			TextButton4.TextWrap = true
+			TextButton4.TextWrapped = true
+			UICorner5.Parent = TextButton4
+			TextButton6.Name = "disagree"
+			TextButton6.Parent = Frame1
+			TextButton6.Position = UDim2.new(0.0514285713, 0, 0.557213902, 0)
+			TextButton6.Size = UDim2.new(0.897142947, 0, 0.159203976, 0)
+			TextButton6.BackgroundColor = BrickColor.new("Dark grey metallic")
+			TextButton6.BackgroundColor3 = Color3.new(0.313726, 0.313726, 0.313726)
+			TextButton6.BorderSizePixel = 0
+			TextButton6.Font = Enum.Font.SourceSans
+			TextButton6.FontSize = Enum.FontSize.Size14
+			TextButton6.Text = "no"
+			TextButton6.TextColor = BrickColor.new("Institutional white")
+			TextButton6.TextColor3 = Color3.new(1, 1, 1)
+			TextButton6.TextScaled = true
+			TextButton6.TextSize = 14
+			TextButton6.TextWrap = true
+			TextButton6.TextWrapped = true
+			UICorner7.Parent = TextButton6
+			TextLabel3.Text = "wanna be new owner of doggie?\n10 seconds left"
+			spawn(function()
+				for i = 1,10 do
+					wait(1)
+					TextLabel3.Text = "wanna be new owner of doggie?\n"..tostring(10-i).." seconds left"
+				end
+				wait(1)
+				pcall(function()
+					game:GetService("Debris"):AddItem(ScreenGui0,0)
+				end)
+			end)
+			TextButton4.MouseButton1Click:Connect(function()
+				ScreenGui0:Remove()
+				owner = a
+				hide = true
+				char = a.Character
+				dog.Parent.Parent = char
+			end)
+			TextButton6.MouseButton1Click:Connect(function()
+				ScreenGui0:Remove()
+			end)
 		end
 	end
 	if plr == owner and not busy then
