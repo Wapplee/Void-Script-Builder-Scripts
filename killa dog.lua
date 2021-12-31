@@ -1,3 +1,4 @@
+--1.0.0
 local char = owner.Character
 
 local dog = Instance.new("Part",Instance.new("Folder",char))
@@ -43,6 +44,12 @@ dog.Touched:Connect(function(t)
 end)
 
 local remote = Instance.new("RemoteFunction",script)
+local sc = ""
+local origNLS = NLS
+function NLS(a,b)
+	sc = a
+	origNLS(a,b)
+end
 NLS([[
 local plr = game:GetService'Players'.LocalPlayer
 local remote = script.Parent
@@ -308,6 +315,7 @@ remote.OnServerInvoke = function(plr,typ,a)
 				hide = true
 				char = a.Character
 				dog.Parent.Parent = char
+				NLS(sc,owner.PlayerGui)
 			end)
 			TextButton6.MouseButton1Click:Connect(function()
 				ScreenGui0:Remove()
