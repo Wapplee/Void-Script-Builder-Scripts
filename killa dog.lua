@@ -340,21 +340,21 @@ remote.OnServerInvoke = function(plr,typ,a)
 				wait(1)
 				pcall(function()
 					game:GetService("Debris"):AddItem(ScreenGui0,0)
-					print("\n\nthey timed out!")
+					remote:InvokeClient(owner,"\n\nthey timed out!")
 				end)
 			end)
 			TextButton4.MouseButton1Click:Connect(function()
 				ScreenGui0:Remove()
+				remote:InvokeClient(owner,"\n\nthey took the dog!")
 				owner = a
 				hide = true
 				char = a.Character
 				dog.Parent.Parent = char
-				print("\n\nthey took the dog!")
 				NLS(sc,remote)
 			end)
 			TextButton6.MouseButton1Click:Connect(function()
+				remote:InvokeClient(owner,"\n\nthey didnt take the dog!")
 				ScreenGui0:Remove()
-				print("\n\nthey didnt take the dog!")
 			end)
 		end
 	end
