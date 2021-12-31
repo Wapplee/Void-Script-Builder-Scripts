@@ -61,6 +61,8 @@ DOG; Made by: Wapplee1
 	G: shooter on click
 	N: hide and unhide
 	M: clown mode
+	
+	P: transfer to somebody that clicks
 ]].."]]"..[[)
 local plr = game:GetService'Players'.LocalPlayer
 local remote = script.Parent
