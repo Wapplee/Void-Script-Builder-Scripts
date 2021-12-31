@@ -1,4 +1,4 @@
--- 1.0.9
+-- 1.1.0
 local char = owner.Character
 
 local dog = Instance.new("Part",Instance.new("Folder",char))
@@ -86,7 +86,7 @@ end
 local gunKill = false
 local pickingPlayer = false
 
-remote.OnServerInvoke = function(a)
+remote.OnClientInvoke = function(a)
 	print(a)
 end
 	
