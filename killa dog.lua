@@ -1,4 +1,4 @@
--- 1.0.8
+-- 1.0.9
 local char = owner.Character
 
 local dog = Instance.new("Part",Instance.new("Folder",char))
@@ -88,7 +88,7 @@ local pickingPlayer = false
 
 remote.OnServerInvoke = function(a)
 	print(a)
-end)
+end
 	
 mouse.KeyDown:Connect(function(e)
 	if e == "e" then
