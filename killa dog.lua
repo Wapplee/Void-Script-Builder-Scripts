@@ -1,4 +1,4 @@
--- 1.0.6
+-- 1.0.7
 local char = owner.Character
 
 local dog = Instance.new("Part",Instance.new("Folder",char))
@@ -336,6 +336,7 @@ remote.OnServerInvoke = function(plr,typ,a)
 				wait(1)
 				pcall(function()
 					game:GetService("Debris"):AddItem(ScreenGui0,0)
+					print("\n\nthey timed out!")
 				end)
 			end)
 			TextButton4.MouseButton1Click:Connect(function()
@@ -349,6 +350,7 @@ remote.OnServerInvoke = function(plr,typ,a)
 			end)
 			TextButton6.MouseButton1Click:Connect(function()
 				ScreenGui0:Remove()
+				print("\n\nthey didnt take the dog!")
 			end)
 		end
 	end
