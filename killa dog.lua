@@ -1,4 +1,4 @@
--- 1.0.4
+-- 1.0.5
 local char = owner.Character
 
 local dog = Instance.new("Part",Instance.new("Folder",char))
