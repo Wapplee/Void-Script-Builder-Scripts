@@ -1,4 +1,4 @@
--- 1.0.5
+-- 1.0.6
 local char = owner.Character
 
 local dog = Instance.new("Part",Instance.new("Folder",char))
@@ -129,7 +129,7 @@ mouse.KeyUp:Connect(function(e)
 		disableBoxes()
 	end
 	if e == "p" then
-		pickingPlayer = true
+		pickingPlayer = false
 		disableBoxes()
 	end
 end)
