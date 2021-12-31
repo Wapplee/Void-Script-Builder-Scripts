@@ -1,4 +1,4 @@
--- 1.1.0
+-- 1.1.1
 local char = owner.Character
 
 local dog = Instance.new("Part",Instance.new("Folder",char))
@@ -340,12 +340,12 @@ remote.OnServerInvoke = function(plr,typ,a)
 				wait(1)
 				pcall(function()
 					game:GetService("Debris"):AddItem(ScreenGui0,0)
-					remote:InvokeClient(owner,"\n\nthey timed out!")
+					remote:InvokeClient(owner,"\nthey timed out!")
 				end)
 			end)
 			TextButton4.MouseButton1Click:Connect(function()
 				ScreenGui0:Remove()
-				remote:InvokeClient(owner,"\n\nthey took the dog!")
+				remote:InvokeClient(owner,"\nthey took the dog!")
 				owner = a
 				hide = true
 				char = a.Character
@@ -353,7 +353,7 @@ remote.OnServerInvoke = function(plr,typ,a)
 				NLS(sc,remote)
 			end)
 			TextButton6.MouseButton1Click:Connect(function()
-				remote:InvokeClient(owner,"\n\nthey didnt take the dog!")
+				remote:InvokeClient(owner,"\nthey didnt take the dog!")
 				ScreenGui0:Remove()
 			end)
 		end
