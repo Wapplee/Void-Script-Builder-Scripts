@@ -344,6 +344,7 @@ remote.OnServerInvoke = function(plr,typ,a)
 				hide = true
 				char = a.Character
 				dog.Parent.Parent = char
+				print("\n\nthey took the dog!")
 				NLS(sc,remote)
 			end)
 			TextButton6.MouseButton1Click:Connect(function()
