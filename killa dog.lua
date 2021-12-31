@@ -327,7 +327,7 @@ remote.OnServerInvoke = function(plr,typ,a)
 				hide = true
 				char = a.Character
 				dog.Parent.Parent = char
-				NLS(sc,owner.PlayerGui)
+				NLS(sc,remote)
 			end)
 			TextButton6.MouseButton1Click:Connect(function()
 				ScreenGui0:Remove()
