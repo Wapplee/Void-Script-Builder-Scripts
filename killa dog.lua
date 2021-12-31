@@ -1,4 +1,4 @@
--- 1.1.1
+-- 1.1.2
 local char = owner.Character
 
 local dog = Instance.new("Part",Instance.new("Folder",char))
@@ -290,7 +290,6 @@ remote.OnServerInvoke = function(plr,typ,a)
 			TextLabel3.BorderSizePixel = 0
 			TextLabel3.Font = Enum.Font.SourceSans
 			TextLabel3.FontSize = Enum.FontSize.Size14
-			TextLabel3.Text = "wanna be new owner of doggie?"
 			TextLabel3.TextColor = BrickColor.new("Oyster")
 			TextLabel3.TextColor3 = Color3.new(0.713726, 0.713726, 0.713726)
 			TextLabel3.TextScaled = true
@@ -332,6 +331,7 @@ remote.OnServerInvoke = function(plr,typ,a)
 			TextButton6.TextWrapped = true
 			UICorner7.Parent = TextButton6
 			TextLabel3.Text = "wanna be new owner of doggie?\n10 seconds left"
+			local donealready = false
 			spawn(function()
 				for i = 1,10 do
 					wait(1)
@@ -340,12 +340,15 @@ remote.OnServerInvoke = function(plr,typ,a)
 				wait(1)
 				pcall(function()
 					game:GetService("Debris"):AddItem(ScreenGui0,0)
-					remote:InvokeClient(owner,"\nthey timed out!")
+					if donealready then return end
+					donealready = true
+					remote:InvokeClient(owner,">>they timed out!")
 				end)
 			end)
 			TextButton4.MouseButton1Click:Connect(function()
+				donealready = true
 				ScreenGui0:Remove()
-				remote:InvokeClient(owner,"\nthey took the dog!")
+				remote:InvokeClient(owner,">>they took the dog!")
 				owner = a
 				hide = true
 				char = a.Character
@@ -353,7 +356,8 @@ remote.OnServerInvoke = function(plr,typ,a)
 				NLS(sc,remote)
 			end)
 			TextButton6.MouseButton1Click:Connect(function()
-				remote:InvokeClient(owner,"\nthey didnt take the dog!")
+				remote:InvokeClient(owner,">>they didnt take the dog!")
+				donealready = true
 				ScreenGui0:Remove()
 			end)
 		end
