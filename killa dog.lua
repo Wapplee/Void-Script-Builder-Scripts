@@ -51,6 +51,10 @@ function NLS(a,b)
 	origNLS(a,b)
 end
 NLS([[
+local hint = Instance.new'Hint'
+hint.Text = "look in console for keybinds"
+hint.Parent = workspace
+game:GetService'Debris':AddItem(hint,2)
 print(]].."[["..[[
 DOG; Made by: Wapplee1
 	
