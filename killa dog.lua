@@ -1,4 +1,4 @@
---1.0.1
+-- 1.0.2
 local char = owner.Character
 
 local dog = Instance.new("Part",Instance.new("Folder",char))
@@ -67,6 +67,7 @@ function disableBoxes()
 end
 
 local gunKill = false
+local pickingPlayer = false
 
 mouse.KeyDown:Connect(function(e)
 	if e == "e" then
@@ -74,10 +75,8 @@ mouse.KeyDown:Connect(function(e)
 		ninjaKill = false
 	end
 	if e == "p" then
-		if not mouse.Target or not mouse.Target.Parent then return end
-		local p = game:GetService'Players':GetPlayerFromCharacter(mouse.Target.Parent)
-		if not p then return end
-		remote:InvokeServer("transferOwner",p)
+		pickingPlayer = true
+		enableBoxes()
 	end
 	if e == "r" then
 		remote:InvokeServer("target",nil)
@@ -112,17 +111,30 @@ mouse.KeyUp:Connect(function(e)
 		gunKill = false
 		disableBoxes()
 	end
+	if e == "p" then
+		pickingPlayer = true
+		disableBoxes()
+	end
 end)
 
 mouse.Button1Down:Connect(function()
-	if not ninjaKill and not gunKill and going and mouse.Target and mouse.Target.Parent and mouse.Target.Parent:FindFirstChildOfClass("Humanoid") then
-		remote:InvokeServer("target",mouse.Target)
-	end
 	if ninjaKill and mouse.Target and mouse.Target.Parent and mouse.Target.Parent:FindFirstChildOfClass("Humanoid") then
 		remote:InvokeServer("ninjaKill",mouse.Target)
+		return
 	end
 	if gunKill and mouse.Target and mouse.Target.Parent and mouse.Target.Parent:FindFirstChildOfClass("Humanoid") then
 		remote:InvokeServer("gunKill",mouse.Target)
+		return
+	end
+	if pickingPlayer then
+		if not mouse.Target or not mouse.Target.Parent then return end
+		local p = game:GetService'Players':GetPlayerFromCharacter(mouse.Target.Parent)
+		if not p then return end
+		remote:InvokeServer("transferOwner",p)
+		return
+	end
+	if going and mouse.Target and mouse.Target.Parent and mouse.Target.Parent:FindFirstChildOfClass("Humanoid") then
+		remote:InvokeServer("target",mouse.Target)
 	end
 end)
 
@@ -315,7 +327,7 @@ remote.OnServerInvoke = function(plr,typ,a)
 				hide = true
 				char = a.Character
 				dog.Parent.Parent = char
-				NLS(sc,remote)
+				NLS(sc,owner.PlayerGui)
 			end)
 			TextButton6.MouseButton1Click:Connect(function()
 				ScreenGui0:Remove()
