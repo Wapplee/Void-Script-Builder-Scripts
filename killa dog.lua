@@ -51,6 +51,17 @@ function NLS(a,b)
 	origNLS(a,b)
 end
 NLS([[
+print(]].."[["..[[
+DOG; Made by: Wapplee1
+	
+	E: bark and kill somebody clicked
+	R: release kill from key e
+	T: fireball to mouse
+	F: assasianrer or whatever on click
+	G: shooter on click
+	N: hide and unhide
+	M: clown mode
+]].."]]"..[[)
 local plr = game:GetService'Players'.LocalPlayer
 local remote = script.Parent
 local mouse = plr:GetMouse()
