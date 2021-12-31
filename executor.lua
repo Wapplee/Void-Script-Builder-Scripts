@@ -1,4 +1,4 @@
--- Better instance.new
+-- Better instance.new.
 local Instance = {new = function(a,b)
 	
 	local Parent = nil
@@ -25,13 +25,11 @@ local board = Instance.new("Part",{Parent = script,Name = "Board",Anchored = tru
 local boardExecute = Instance.new("Part",{Parent = board,Anchored = true,CanCollide = false,Size = Vector3.new(1,1,1),CFrame = board.CFrame*CFrame.new(board.Size.X/2-.5,board.Size.Y/2+.5,0),Color = Color3.new(0,1,0)})
 local boardexecuteEveryone = Instance.new("Part",{Parent = board,Anchored = true,CanCollide = false,Size = Vector3.new(1,1,1),CFrame = board.CFrame*CFrame.new(board.Size.X/2-1.5,board.Size.Y/2+.5,0),Color = Color3.new(0,0,.3)})
 local boardInvisible = Instance.new("Part",{Parent = board,Anchored = true,CanCollide = false,Size = Vector3.new(1,1,1),CFrame = board.CFrame*CFrame.new(board.Size.X/2-2.5,board.Size.Y/2+.5,0),Color = Color3.new(1,1,1)})
-local boardRemove = Instance.new("Part",{Parent = board,Anchored = true,CanCollide = false,Size = Vector3.new(1,1,1),CFrame = board.CFrame*CFrame.new((board.Size.X/2)*-1+.5,board.Size.Y/2+.5,0),Color = Color3.new(1,0,0)})
 
 -- Button workers?
 local executeClick = Instance.new("ClickDetector",{Parent = boardExecute})
 local executeEveryone = Instance.new("ClickDetector",boardexecuteEveryone)
 local boardInvisibleClick = Instance.new("ClickDetector",boardInvisible)
-local boardRemoveClick = Instance.new("ClickDetector",boardRemove)
 
 -- Guis
 local surface = Instance.new("SurfaceGui",{Parent = board,Adornee = board,Name = "Surface",AlwaysOnTop = true})
@@ -43,16 +41,9 @@ local txtBox = Instance.new("TextBox",{ClearTextOnFocus = false,Name="Txt",Paren
 local executingEveryone = false
 local boardInvisibleStat = false
 
-local remote = Instance.new("RemoteFunction",owner.PlayerGui)
 
 
 -- Work button workers
-boardRemoveClick.MouseClick:Connect(function(p)
-	if p ~= owner then return end
-	remote:InvokeClient(owner,true)
-	wait(1)
-	board:Remove()
-end)
 boardInvisibleClick.MouseClick:Connect(function(p)
 	if p ~= owner then return end
 	boardInvisibleStat = not boardInvisibleStat
@@ -74,6 +65,7 @@ end)
 
 
 -- Displaying for everyone
+local remote = Instance.new("RemoteFunction",owner.PlayerGui)
 
 remote.OnServerInvoke = function(plr,t)
 	if plr ~= owner then return end
