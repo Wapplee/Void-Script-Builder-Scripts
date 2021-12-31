@@ -71,7 +71,7 @@ DOG; Made by: Wapplee1
 local plr = game:GetService'Players'.LocalPlayer
 local remote = script.Parent
 local mouse = plr:GetMouse()
-
+	
 local tab = {}
 local going = false
 local ninjaKill = false
@@ -86,6 +86,10 @@ end
 local gunKill = false
 local pickingPlayer = false
 
+remote.OnServerInvoke = function(a)
+	print(a)
+end)
+	
 mouse.KeyDown:Connect(function(e)
 	if e == "e" then
 		going = true
