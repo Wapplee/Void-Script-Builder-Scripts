@@ -181,7 +181,7 @@ function OutputLog(txtt,notime)
 
 	local txt
 	for _,v in pairs(Outputs) do
-		v.Position += UDim2.new(0,0,0,30)
+		v.Position += UDim2.new(0,0,0,35)
 	end
 	if #Outputs > 0 and Outputs[#Outputs].Name == TEXT then
 		txt = Outputs[#Outputs]
@@ -553,7 +553,7 @@ NLS([[
 	end
 	ChangedPrint("\nstopped script.\n",{Text="Techa - By Wapplee1",TextSize = 40,TextColor3 = Color3.new(1,.5,0)})
 	ChangedPrint("You can type in commands inside the right console! To start, type help.",{})
-	ChangedPrint("Version 0.0.1",{TextSize = 10})
+	ChangedPrint("Version 0.0.2",{TextSize = 10})
 	]],Remote)
 
 while true do
