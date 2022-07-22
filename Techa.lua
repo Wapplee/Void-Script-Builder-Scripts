@@ -1,3 +1,4 @@
+local scriptversion = "0.0.3"
 local screenColor = Color3.new(.9,.9,.9)
 local TextColor = Color3.new(1,1,1)
 
@@ -17,10 +18,12 @@ function GetPlayerFromName(nam)
 	if type(nam) ~= "string" or nam=="" then return {owner} end
 	local plrs = game:GetService("Players"):GetChildren()
 
-	if table.find({"me","all","others"},nam) then
+	if table.find({"me","all","others","random"},nam) then
 		nam = nam:lower()
 		if nam == "me" then
 			return {owner}
+		elseif nam == "random" then
+			return {plrs[math.random(1,#plrs)]}
 		elseif nam == "all" then
 			return plrs
 		elseif nam == "others" then
@@ -180,14 +183,14 @@ function OutputLog(txtt,notime)
 	local TEXT = (notime and "" or "<font size=\"16\">"..table.concat({time.hour,time.min,time.sec},":").." - </font>")..tostring(txtt)
 
 	local txt
-	for _,v in pairs(Outputs) do
-		v.Position += UDim2.new(0,0,0,35)
-	end
 	if #Outputs > 0 and Outputs[#Outputs].Name == TEXT then
 		txt = Outputs[#Outputs]
 		txt.TIMES.Value+=1
 		txt.Text = txt.Name..(" (%s)"):format(txt.TIMES.Value+1)
 	else
+		for _,v in pairs(Outputs) do
+			v.Position += UDim2.new(0,0,0,35)
+		end
 		txt = Instance.new("TextBox",CommandScreenOutput)
 		local times = Instance.new("NumberValue",txt)
 		times.Name = "TIMES"
@@ -202,7 +205,7 @@ function OutputLog(txtt,notime)
 		txt.RichText = true
 		txt.AutomaticSize = Enum.AutomaticSize.X
 		table.insert(Outputs,txt)
-		if #Outputs == 13 then
+		if #Outputs == 18 then
 			local op = Outputs[1]
 			table.remove(Outputs,1)
 			op:Remove()
@@ -221,7 +224,19 @@ local exeVariables = {
 	text = CommandScreenTextbox,
 	log = OutputLog,
 }
-local commands = {
+local commands
+commands = {
+	{"clear",{Args=0,"Clears the console.",function()
+		for i,v in pairs(Outputs) do
+			v:Remove()
+			table.remove(Outputs,i)
+		end
+	end,}},
+	{"help",{Args = 1,"Gets help.",function(args,after)
+		if after == "" then
+			OutputLog("Welcome to Techa v"..scriptversion.."! This is a script where you can",true).TextColor3 = Color3.new(0,1,0)
+		end
+	end,}},
 	{"exe",{Args = 1,"Executes code, or the middle screen. Ex: exe log(\"Hello World!\")",function(args,after)
 		local txt = (after == "" and CodeScreenTextbox.Text or after)
 
@@ -390,6 +405,13 @@ local commands = {
 			end
 		end
 		for _,v in pairs(hums) do
+			v.Changed:Connect(function(h)
+				if h == "Health" then
+					if v.MaxHealth == math.huge then
+						v.Health = math.huge
+					end
+				end
+			end)
 			v.MaxHealth = math.huge
 			v.Health = math.huge
 			local FF = Instance.new("ForceField",v.Parent)
@@ -553,7 +575,7 @@ NLS([[
 	end
 	ChangedPrint("\nstopped script.\n",{Text="Techa - By Wapplee1",TextSize = 40,TextColor3 = Color3.new(1,.5,0)})
 	ChangedPrint("You can type in commands inside the right console! To start, type help.",{})
-	ChangedPrint("Version 0.0.2",{TextSize = 10})
+	ChangedPrint("Version ]]..scriptversion..[[",{TextSize = 10})
 	]],Remote)
 
 while true do
@@ -604,10 +626,11 @@ while true do
 		end
 	end
 
-	InfoScreenTextbox.Text = ([[Server FPS: %s
+	InfoScreenTextbox.Text = ([[Version: %s
+Server FPS: %s
 Physics FPS: %s
 Players: %s
 Instances: %s
 Scripts (workspace): %s
-Unanchored Parts: %s]]):format(sfps,pfps,#plrs.."/"..maxplrs,#items,scripts,pparts)
+Unanchored Parts: %s]]):format(scriptversion,sfps,pfps,#plrs.."/"..maxplrs,#items,scripts,pparts)
 end
