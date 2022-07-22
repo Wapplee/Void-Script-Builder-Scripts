@@ -1,4 +1,4 @@
-local scriptversion = "0.0.3"
+local scriptversion = "0.0.4"
 local screenColor = Color3.new(.9,.9,.9)
 local TextColor = Color3.new(1,1,1)
 
@@ -8,6 +8,7 @@ local tweenInfo = TweenInfo.new(tweenTime,Enum.EasingStyle.Back,Enum.EasingDirec
 
 
 local hrp = owner.Character.HumanoidRootPart
+local hum = owner.Character:FindFirstChildOfClass("Humanoid")
 local plrs = game:GetService("Players")
 
 local folder = Instance.new("Folder",script)
@@ -48,7 +49,17 @@ function GetPlayerFromName(nam)
 end
 local screens = {}
 
-local origSettings = {}
+
+function HumanoidSetup()
+	local char = owner.Character or owner.CharacterAdded:wait()
+	hum = char:FindFirstChildOfClass("Humanoid")
+	hum.Died:Connect(function()
+		for _,v in pairs(screens) do
+			v.Anchored = true
+		end
+	end)
+end
+HumanoidSetup()
 function createScreen(size,offset)
 	local CodeScreen = Instance.new("Part",folder)
 	CodeScreen.Name = "CodeScreen"
@@ -125,8 +136,12 @@ local CodeScreen = createScreen(Vector3.new(7,5,.001),CFrame.new(0,1,-5))
 local InfoScreen = createScreen(Vector3.new(6,3.5,.001),CFrame.new(-6,1,-3)*CFrame.Angles(0,math.rad(45),0))
 local CommandScreen = createScreen(Vector3.new(6,3.5,.001),CFrame.new(6,1,-3)*CFrame.Angles(0,math.rad(-45),0))
 
-owner.CharacterAdded:Connect(function(c)
+owner.CharacterAdded:Connect(function(c)	
 	hrp = c:WaitForChild("HumanoidRootPart",10)
+	HumanoidSetup()
+	for _,v in pairs(screens) do
+		v.Anchored = true
+	end
 	if not hrp then
 		script:Remove()
 		error("Stopped script.")
