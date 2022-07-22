@@ -163,8 +163,6 @@ CommandScreenOutput.Size = UDim2.new(1,0,1-CommandScreenTextbox.Size.Y.Scale,0)
 CommandScreenOutput.Position = UDim2.new(0,0,CommandScreenTextbox.Size.Y.Scale,0)
 CommandScreenOutput.BackgroundTransparency = 1
 
-local uiorder = Instance.new("UIListLayout",CommandScreenOutput)
-uiorder.Padding = UDim.new(0,20)
 
 CodeScreenTextbox.MultiLine = true
 
@@ -182,6 +180,9 @@ function OutputLog(txtt,notime)
 	local TEXT = (notime and "" or "<font size=\"16\">"..table.concat({time.hour,time.min,time.sec},":").." - </font>")..tostring(txtt)
 
 	local txt
+	for _,v in pairs(Outputs) do
+		v.Position += UDim2.new(0,0,0,30)
+	end
 	if #Outputs > 0 and Outputs[#Outputs].Name == TEXT then
 		txt = Outputs[#Outputs]
 		txt.TIMES.Value+=1
@@ -221,7 +222,7 @@ local exeVariables = {
 	log = OutputLog,
 }
 local commands = {
-	{"exe",{Args = 1,function(args,after)
+	{"exe",{Args = 1,"Executes code, or the middle screen. Ex: exe log(\"Hello World!\")",function(args,after)
 		local txt = (after == "" and CodeScreenTextbox.Text or after)
 
 		local succ,errormsg = pcall(function()
@@ -243,7 +244,7 @@ local commands = {
 			print("Error in script! "..errormsg)
 		end
 	end,}},
-	{"steal",{Args = 1,function(args,after)
+	{"steal",{Args = 1,"Steals a tool from a player(s) hand.",function(args,after)
 		local stealfrom = GetPlayerFromName(after)
 		for _,v in pairs(stealfrom) do
 			local char = v.Character
@@ -255,7 +256,7 @@ local commands = {
 			end
 		end
 	end,}},
-	{"steal",{Args = 1,function(args,after)
+	{"stealbp",{Args = 1,"Steals tools from a player(s) backpack.",function(args,after)
 		local stealfrom = GetPlayerFromName(after)
 		for _,v in pairs(stealfrom) do
 			for _,tool in pairs(v.Backpack:GetChildren()) do
@@ -265,7 +266,7 @@ local commands = {
 			end
 		end
 	end,}},
-	{"kill",{Args = 1,function(args,after)
+	{"kill",{Args = 1,"Kills a player(s)",function(args,after)
 		local plrs = GetPlayerFromName(after)
 		for _,plr in pairs(plrs) do
 			local char = plr.Character
@@ -277,13 +278,13 @@ local commands = {
 			end
 		end
 	end,}},
-	{"respawn",{Args = 1,function(args,after)
+	{"respawn",{Args = 1,"Respawns player(s)",function(args,after)
 		local plrs = GetPlayerFromName(after)
 		for _,plr in pairs(plrs) do
 			plr:LoadCharacter()
 		end
 	end,}},
-	{"tp",{Args = 2,function(args,after)
+	{"tp",{Args = 2,"Tp a player(s) to another player. Ex: tp player1 player2",function(args,after)
 		local plr1 = GetPlayerFromName(args[1])
 		local plr2 = GetPlayerFromName(args[2])[1]
 		if plr2 and #args == 2 then
@@ -311,7 +312,7 @@ local commands = {
 			end
 		end
 	end,}},
-	{"freeze",{Args = 1,function(args,after)
+	{"freeze",{Args = 1,"Freezes players.",function(args,after)
 		local plrs = GetPlayerFromName(after)
 		for _,v in pairs(plrs) do
 			if v.Character then
@@ -323,7 +324,7 @@ local commands = {
 			end
 		end
 	end,}},
-	{"unfreeze",{Args = 1,function(args,after)
+	{"unfreeze",{Args = 1,"Unfreezes players.",function(args,after)
 		local plrs = GetPlayerFromName(after)
 		for _,v in pairs(plrs) do
 			if v.Character then
@@ -335,7 +336,7 @@ local commands = {
 			end
 		end
 	end,}},
-	{"speed",{Args = 2,function(args,after)
+	{"speed",{Args = 2,"Changes someones speed. Ex: speed player 50",function(args,after)
 		local plr = GetPlayerFromName(args[1])
 		local hums = {}
 		if #args == 1 then
@@ -356,7 +357,7 @@ local commands = {
 			end
 		end
 	end,}},
-	{"jump",{Args = 2,function(args,after)
+	{"jump",{Args = 2,"Changes someones jump. Ex: jump player 100",function(args,after)
 		local plr = GetPlayerFromName(args[1])
 		local hums = {}
 		if #args == 1 then
@@ -377,7 +378,7 @@ local commands = {
 			end
 		end
 	end,}},
-	{"god",{Args = 1,function(args,after)
+	{"god",{Args = 1,"Makes someone almost invincible.",function(args,after)
 		local plr = GetPlayerFromName(args[1])
 		local hums = {}
 		for _,v in pairs(plr) do
@@ -395,7 +396,7 @@ local commands = {
 			FF.Visible = false
 		end
 	end,}},
-	{"ungod",{Args = 1,function(args,after)
+	{"ungod",{Args = 1,"Revokes invincibility.",function(args,after)
 		local plr = GetPlayerFromName(args[1])
 		local hums = {}
 		for _,v in pairs(plr) do
@@ -414,13 +415,13 @@ local commands = {
 			end
 		end
 	end,}},
-	{"jail",{Args = 1,function(args,after)
+	{"jail",{Args = 1,"Jails somebody.",function(args,after)
 		local plr = GetPlayerFromName(after)
 		for _,v in pairs(plr) do
 			table.insert(jailed,{v.UserId,CFrame.new(hrp.Position+Vector3.new(0,0,-7))})
 		end
 	end,}},
-	{"unjail",{Args = 1,function(args,after)
+	{"unjail",{Args = 1,"Unjails a player.",function(args,after)
 		local plr = GetPlayerFromName(after)
 		for _,v in pairs(plr) do
 			for i,b in pairs(jailed) do
@@ -445,7 +446,7 @@ function runcommand(c)
 
 	for _,v in pairs(commands) do
 		if c:sub(1,#v[1]) == v[1] then
-			v[2][1](args,table.concat(args," "))
+			v[2][2](args,table.concat(args," "))
 			OutputLog("<font color=\"rgb(0,255,255)\">Used command: "..v[1].."</font>",true).RichText = true
 			break
 		end
